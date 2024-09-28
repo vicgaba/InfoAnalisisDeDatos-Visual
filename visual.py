@@ -52,14 +52,43 @@ sns.set_theme(style='whitegrid')
 # plt.xticks(rotation=45) #Rota las etiquetas del eje x
 # plt.show()
 
-# 5 Ventas por color
+# 5 Ventas por color de producto
+# plt.figure(figsize=(10,6))
+# sns.countplot(data=df_limpio, x='Color', order=df_limpio['Color'].value_counts().index, palette='viridis', hue='Genero', legend=True) #hue genera la leyenda de por lo cual fue agrupado
+# plt.title('Venta por Color de Producto')
+# plt.xlabel('Color')
+# plt.ylabel('Número de ventas')
+# plt.xticks(rotation=45) #Rota las etiquetas del eje x
+# plt.show()
+
+
+# 6 Ventas a lo largo del horas del día  //clase 5/09/24
+#vamos a usar un histograma y utilizaremos la hora del día
+
+# Definimos explictamente el campo hora
+# df_limpio['Hora'] = pd.to_datetime(df_limpio['Hora'], format='%H:%M:%S').dt.hour # Tomo solo la hora, no minutos ni segundos
+
+# plt.figure(figsize=(10,6))
+# sns.histplot(df_limpio['Hora'], bins= 24)
+# plt.title('Distribución de Ventas por hora')
+# plt.xlabel('Hora')
+# plt.ylabel('Número de ventas')
+# plt.xticks(range(0,24)) #Para darle inclinación
+# plt.show()
+
+
+# 6 Ventas a lo largo del horas del día  //clase 5/09/24
+#vamos a usar un histograma y utilizaremos la hora del día
+
+# Definimos explictamente el campo hora
+df_limpio['Fecha'] = pd.to_datetime(df_limpio['Fecha'])
+df_limpio['Día de la Semana'] = df_limpio['Fecha'].dt.day_name() # Extraigo el nombre del día de la semana
+
 plt.figure(figsize=(10,6))
-sns.countplot(data=df_limpio, x='Color', order=df_limpio['Color'].value_counts().index, palette='viridis', hue='Genero', legend=True) #hue genera la leyenda de por lo cual fue agrupado
-plt.title('Venta por Color de Producto')
-plt.xlabel('Color')
+sns.countplot(data=df_limpio, x='Día de la Semana', order=['Monday','Tuesday','Wednesday',
+                                                                      'Thursday', 'Friday', 'Saturday', 'Sunday'], legend=True)
+plt.title('Distribución de Ventas por Día')
+plt.xlabel('Día')
 plt.ylabel('Número de ventas')
-plt.xticks(rotation=45) #Rota las etiquetas del eje x
+plt.xticks(rotation= 45) #Para darle inclinación
 plt.show()
-
-
-
